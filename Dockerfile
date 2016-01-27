@@ -22,4 +22,4 @@ COPY config/ /etc/freeswitch/
 # Don't expose any ports - use host networking
 
 # Run Freeswitch
-CMD stdbuf -i0 -o0 -e0 /usr/bin/freeswitch -c
+CMD ["stdbuf", "-i0", "-o0", "-e0", "freeswitch", "-c"]
