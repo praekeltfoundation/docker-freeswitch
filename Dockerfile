@@ -5,7 +5,7 @@ MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 RUN echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" > /etc/apt/sources.list.d/freeswitch.list \
     && apt-key adv --keyserver pool.sks-keyservers.net --recv-key D76EDC7725E010CF
 
-ENV FREESWITCH_VERSION "1.6.6"
+ENV FREESWITCH_VERSION "1.6.7"
 
 # Install Freeswitch (use regular apt-get install to avoid weird dependency problems)
 RUN apt-get update \
@@ -18,6 +18,9 @@ RUN apt-get update \
 # Copy basic configuration files
 RUN cp -a /usr/share/freeswitch/conf/vanilla/. /etc/freeswitch/
 COPY config/ /etc/freeswitch/
+
+# Disable the example gateway
+RUN mv /etc/freeswitch/directory/default/example.com.conf /etc/freeswitch/directory/default/example.com.noload
 
 # Don't expose any ports - use host networking
 
