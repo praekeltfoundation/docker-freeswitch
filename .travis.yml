@@ -1,0 +1,16 @@
+sudo: required
+services:
+  - docker
+language: bash
+
+# Update Docker Engine
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-engine
+
+# Build the container, run it, wait for it to start, then stop it.
+script:
+  - docker build -t freeswitch .
+  - CONTAINER_ID="$(docker run -d freeswitch)"
+  - sleep 5
+  - docker stop "$CONTAINER_ID"
