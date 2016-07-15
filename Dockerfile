@@ -5,14 +5,14 @@ MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 RUN echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" > /etc/apt/sources.list.d/freeswitch.list \
     && apt-key adv --keyserver pool.sks-keyservers.net --recv-key D76EDC7725E010CF
 
-ENV FREESWITCH_VERSION "1.6.9"
+ENV FREESWITCH_VERSION "1.6.9~16~d574870-1~jessie+1"
 
 # Install Freeswitch (use regular apt-get install to avoid weird dependency problems)
 RUN apt-get update \
     && apt-get -qy install \
-        freeswitch-meta-vanilla=${FREESWITCH_VERSION}* \
-        freeswitch-mod-flite=${FREESWITCH_VERSION}* \
-        freeswitch-mod-shout=${FREESWITCH_VERSION}* \
+        freeswitch-meta-vanilla=$FREESWITCH_VERSION \
+        freeswitch-mod-flite=$FREESWITCH_VERSION \
+        freeswitch-mod-shout=$FREESWITCH_VERSION \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy basic configuration files
