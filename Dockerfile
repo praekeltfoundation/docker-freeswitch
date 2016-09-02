@@ -4,7 +4,7 @@ MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 # Add Freeswitch 1.6 repo
 RUN echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" \
         > /etc/apt/sources.list.d/freeswitch.list \
-    && apt-key adv --keyserver pool.sks-keyservers.net --recv-key D76EDC7725E010CF
+    && apt-key adv --keyserver pool.sks-keyservers.net --recv-key 20B06EE621AB150D40F6079FD76EDC7725E010CF
 
 ENV FREESWITCH_VERSION "1.6.9~16~d574870-1~jessie+1"
 
