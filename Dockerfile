@@ -20,7 +20,7 @@ RUN cp -a /usr/share/freeswitch/conf/vanilla/. /etc/freeswitch/
 COPY config/ /etc/freeswitch/
 
 # Disable the example gateway
-RUN mv /etc/freeswitch/directory/default/example.com.xml /etc/freeswitch/directory/default/example.com.noload
+RUN mv /etc/freeswitch/directory/default/example.com.xml /etc/freeswitch/directory/default/example.com.xml.noload
 
 # Don't expose any ports - use host networking
 
