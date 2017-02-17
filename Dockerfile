@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER Praekelt.org <sre@praekelt.org>
+LABEL maintainer "Praekelt.org <sre@praekelt.org>"
 
 # Add Freeswitch 1.6 repo
 RUN echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" \
