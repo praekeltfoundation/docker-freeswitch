@@ -12,6 +12,6 @@ before_install:
 script:
   - docker build -t freeswitch .
   - CONTAINER_ID="$(docker run -d freeswitch)"
-  - sleep 5
+  - sleep 15
   - docker exec -ti "$CONTAINER_ID" fs_cli -x 'module_exists libmod_prometheus'
   - docker stop "$CONTAINER_ID"

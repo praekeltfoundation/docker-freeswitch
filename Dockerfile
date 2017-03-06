@@ -24,9 +24,9 @@ RUN mv /etc/freeswitch/directory/default/example.com.xml /etc/freeswitch/directo
 
 # Install rust toolchain
 RUN apt-get -y install build-essential curl git-core
-RUN curl https://sh.rustup.rs -sSf | \
-    sh -s -- --default-toolchain stable -y
-
+RUN curl -sO https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init && chmod +x rustup-init
+RUN echo "4cda09438c08eab55cfe4a98325a5722c4ec66865d07da07d38ddc6c36893692  rustup-init"|shasum -c -
+RUN echo 1|./rustup-init
 ENV PATH=/root/.cargo/bin:$PATH
 
 # Clone the project and build it:
