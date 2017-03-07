@@ -17,11 +17,11 @@ install: []
 
 before_script:
   - version="$(awk '$2 == "FREESWITCH_VERSION" { print $3; exit }' Dockerfile | cut -d'~' -f1)"
-  - docker pull "$IMAGE:$version" || true
+  - docker pull "$IMAGE"
 
 # Build the container, run it, wait for it to start, then stop it.
 script:
-  - docker build --pull --cache-from "$IMAGE:$version" -t "$IMAGE" .
+  - docker build --pull --cache-from "$IMAGE" -t "$IMAGE" .
   - docker run -d --name freeswitch "$IMAGE"
   - sleep 5
   - docker stop freeswitch
