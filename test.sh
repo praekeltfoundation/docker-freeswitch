@@ -20,9 +20,13 @@ function wait_for_log_line() {
   timeout "${LOG_TIMEOUT:-20}" grep -m 1 -E "$log_pattern" <(docker logs -f freeswitch 2>&1)
 }
 
+function fs_cli_command() {
+  docker exec freeswitch fs_cli -x "$*"
+}
+
 function module_exists {
   local module="$1"; shift
-  [ $(docker exec freeswitch fs_cli -x "module_exists $module") = 'true' ]
+  [ $(fs_cli_command module_exists "$module") = 'true' ]
 }
 
 set -x
@@ -33,11 +37,18 @@ trap "{ set +x; docker stop freeswitch; docker rm -f freeswitch; }" EXIT
 
 wait_for_log_line 'FreeSWITCH Started'
 
+# Check console colorize is disabled
+fs_cli_command console colorize | fgrep '+OK console color disabled'
+
 # Check our modules are configured correctly
 ! module_exists mod_logfile
 module_exists mod_h26x
 module_exists mod_flite
 module_exists mod_shout
+
+# No Sofia profiles (no default ones)
+fs_cli_command sofia profile internal gwlist | fgrep '-ERR no reply'
+fs_cli_command sofia profile external gwlist | fgrep '-ERR no reply'
 
 set +x
 echo
