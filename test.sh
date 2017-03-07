@@ -17,7 +17,7 @@ function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
 function wait_for_log_line() {
   local log_pattern="$1"; shift
-  timeout "${LOG_TIMEOUT:-10}" grep -m 1 -E "$log_pattern" <(docker logs -f freeswitch 2>&1)
+  timeout "${LOG_TIMEOUT:-20}" grep -m 1 -E "$log_pattern" <(docker logs -f freeswitch 2>&1)
 }
 
 function module_exists {
