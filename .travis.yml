@@ -22,9 +22,7 @@ before_script:
 # Build the container, run it, wait for it to start, then stop it.
 script:
   - docker build --pull --cache-from "$IMAGE" -t "$IMAGE" .
-  - docker run -d --name freeswitch "$IMAGE"
-  - sleep 5
-  - docker stop freeswitch
+  - ./test.sh
 
 before_deploy:
   - pip install docker-ci-deploy==0.2.0
