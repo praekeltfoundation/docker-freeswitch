@@ -29,4 +29,4 @@ RUN mv /etc/freeswitch/directory/default/example.com.xml \
 # Set up the entrypoint
 COPY entrypoint.sh /usr/local/bin/freeswitch-entrypoint.sh
 ENTRYPOINT ["freeswitch-entrypoint.sh"]
-CMD ["-c", "-u" "freeswitch", "-g", "freeswitch"]
+CMD ["-c", "-u", "freeswitch", "-g", "freeswitch"]
