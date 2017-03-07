@@ -47,8 +47,8 @@ module_exists mod_flite
 module_exists mod_shout
 
 # No Sofia profiles (no default ones)
-fs_cli_command sofia profile internal gwlist | fgrep '-ERR no reply'
-fs_cli_command sofia profile external gwlist | fgrep '-ERR no reply'
+fs_cli_command sofia profile internal gwlist | fgrep -e '-ERR no reply'
+fs_cli_command sofia profile external gwlist | fgrep -e '-ERR no reply'
 
 set +x
 echo
