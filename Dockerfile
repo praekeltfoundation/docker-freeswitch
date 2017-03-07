@@ -26,5 +26,7 @@ RUN mv /etc/freeswitch/directory/default/example.com.xml \
 
 # Don't expose any ports - use host networking
 
-# Run Freeswitch
-CMD ["stdbuf", "-i0", "-o0", "-e0", "freeswitch", "-c"]
+# Set up the entrypoint
+COPY entrypoint.sh /usr/local/bin/freeswitch-entrypoint.sh
+ENTRYPOINT ["freeswitch-entrypoint.sh"]
+CMD ["-c", "-u" "freeswitch", "-g", "freeswitch"]
