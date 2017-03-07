@@ -37,6 +37,10 @@ trap "{ set +x; docker stop freeswitch; docker rm -f freeswitch; }" EXIT
 
 wait_for_log_line 'FreeSWITCH Started'
 
+# Check FreeSWITCH is run as the freeswitch user by default
+# Need to specify width of user field or else it gets truncated
+docker exec freeswitch ps ax --format 'user:10 pid command' | grep -E '^freeswitch .* freeswitch -c'
+
 # Check console colorize is disabled
 fs_cli_command console colorize | fgrep '+OK console color disabled'
 
