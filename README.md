@@ -1,4 +1,8 @@
 # docker-freeswitch
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/praekeltfoundation/freeswitch.svg)](https://hub.docker.com/r/praekeltfoundation/freeswitch/)
+[![Build Status](https://travis-ci.org/praekeltfoundation/docker-freeswitch.svg?branch=develop)](https://travis-ci.org/praekeltfoundation/docker-freeswitch)
+
 Dockerfile for running [FreeSWITCH](https://freeswitch.org) in a Docker container.
 
 * Base image: `debian:jessie`
