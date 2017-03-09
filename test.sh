@@ -49,6 +49,7 @@ fs_cli_command console colorize | fgrep '+OK console color disabled'
 module_exists mod_h26x
 module_exists mod_flite
 module_exists mod_shout
+module_exists libmod_prometheus
 
 # No Sofia profiles (no default ones)
 fs_cli_command sofia profile internal gwlist | fgrep -e '-ERR no reply'
