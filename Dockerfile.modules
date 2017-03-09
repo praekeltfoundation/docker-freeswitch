@@ -1,5 +1,4 @@
 FROM debian:jessie
-MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 
 # Install rust toolchain and build mod_prometheus
 ENV PATH=/usr/local/bin:$PATH
