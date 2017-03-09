@@ -16,7 +16,6 @@ RUN apt-get update \
         freeswitch-mod-shout=$FREESWITCH_VERSION \
     && rm -rf /var/lib/apt/lists/*
 
-
 # Copy basic configuration files
 RUN cp -a /usr/share/freeswitch/conf/vanilla/. /etc/freeswitch/
 COPY config/ /etc/freeswitch/

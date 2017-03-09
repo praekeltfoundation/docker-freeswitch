@@ -19,7 +19,7 @@ before_script:
   - version="$(awk '$2 == "FREESWITCH_VERSION" { print $3; exit }' Dockerfile | cut -d'~' -f1)"
   - docker pull "$IMAGE"
 
-# Build the modules containerrun it, modules are copied to build/modules.
+# Build the modules container runs it, modules are copied to build/modules.
 # Build the freeswitch container, run it, wait for it to start, then stop it.
 script:
   - docker build -f Dockerfile.modules -t fs-modules .
