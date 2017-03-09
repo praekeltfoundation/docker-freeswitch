@@ -1,9 +1,24 @@
 # docker-freeswitch
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/praekeltfoundation/freeswitch.svg)](https://hub.docker.com/r/praekeltfoundation/freeswitch/)
+[![Build Status](https://travis-ci.org/praekeltfoundation/docker-freeswitch.svg?branch=develop)](https://travis-ci.org/praekeltfoundation/docker-freeswitch)
+
 Dockerfile for running [FreeSWITCH](https://freeswitch.org) in a Docker container.
 
 * Base image: `debian:jessie`
 * Exposed ports: None
 * Volumes: None
+
+### Usage
+You should generally run the container with host networking. Something like:
+```
+docker run -d --net host --name freeswitch praekeltfoundation/freeswitch
+```
+
+If you want to use FreeSWITCH's CLI, you can use Docker's `exec` command to connect to the running container:
+```
+docker exec -it freeswitch fs_cli
+```
 
 ### Packages
 This is NOT a complete FreeSWITCH installation - the Docker image only contains the "meta-vanilla" packages as well as a couple of extra modules. FreeSWITCH is a very large software project with many submodules. We install only the features that *we* need. Still, this may be a useful starting point for anybody looking to run FreeSWITCH under Docker.
