@@ -12,7 +12,8 @@ RUN apt-get update \
     && apt-get -qy install \
         freeswitch-meta-vanilla=$FREESWITCH_VERSION \
         freeswitch-mod-flite=$FREESWITCH_VERSION \
-        freeswitch-mod-shout=$FREESWITCH_VERSION
+        freeswitch-mod-shout=$FREESWITCH_VERSION && \
+        rm -rf /var/lib/apt/lists/*
 
 
 # Copy basic configuration files
@@ -22,23 +23,8 @@ COPY config/ /etc/freeswitch/
 # Disable the example gateway
 RUN mv /etc/freeswitch/directory/default/example.com.xml /etc/freeswitch/directory/default/example.com.noload
 
-# Install rust toolchain
-RUN apt-get -y install build-essential curl git-core
-RUN curl -sO https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init && chmod +x rustup-init
-RUN echo "4cda09438c08eab55cfe4a98325a5722c4ec66865d07da07d38ddc6c36893692  rustup-init"|shasum -c -
-RUN echo 1|./rustup-init
-ENV PATH=/root/.cargo/bin:$PATH
-
-# Clone the project and build it:
-RUN git clone https://github.com/moises-silva/mod_prometheus.git
-RUN cd mod_prometheus && cargo build
-
-# Copy the module to your FreeSWITCH modules directory:
-RUN cp mod_prometheus/target/debug/libmod_prometheus.so /usr/lib/freeswitch/mod/
-
-# Cleanup
-RUN rm -rf .cargo mod_prometheus /var/lib/apt/lists/*
-RUN apt-get -y purge build-essential curl git-core && apt-get -y autoremove
+# Injects any built modules
+COPY build/modules/* /usr/lib/freeswitch/mod/
 
 # Don't expose any ports - use host networking
 
