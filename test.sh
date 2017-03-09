@@ -37,7 +37,7 @@ function http_check {
 
 set -x
 
-docker run -d --name freeswitch "$image"
+docker run -p 6780:6780 -d --name freeswitch "$image"
 # Set a trap to stop the container when we exit
 trap "{ set +x; docker stop freeswitch; docker rm -f freeswitch; }" EXIT
 
