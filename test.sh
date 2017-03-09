@@ -29,6 +29,12 @@ function module_exists {
   [ $(fs_cli_command module_exists "$module") = 'true' ]
 }
 
+function http_check {
+  local url="$1"
+  local code="$2"
+  [ $(curl -s -o /dev/null -w "%{http_code}" $url) = $code ]
+}
+
 set -x
 
 docker run -d --name freeswitch "$image"
@@ -50,6 +56,9 @@ module_exists mod_h26x
 module_exists mod_flite
 module_exists mod_shout
 module_exists libmod_prometheus
+
+# Check prometheus module is serving correctly
+http_check http://localhost:6780/metrics 200
 
 # No Sofia profiles (no default ones)
 fs_cli_command sofia profile internal gwlist | fgrep -e '-ERR no reply'

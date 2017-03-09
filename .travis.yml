@@ -23,7 +23,7 @@ before_script:
 # Build the freeswitch container, run it, wait for it to start, then stop it.
 script:
   - docker build -f Dockerfile.modules -t fs-modules .
-  - docker run -v $PWD/build/modules:/tmp/build/modules/ fs-modules
+  - docker run -v $PWD/build/modules:/tmp/build/modules/ -p 6780:6780 fs-modules
   - docker build --pull --cache-from "$IMAGE" -t "$IMAGE" .
   - ./test.sh "$IMAGE"
 
