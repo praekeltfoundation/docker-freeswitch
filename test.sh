@@ -30,8 +30,8 @@ function module_exists {
 }
 
 function http_check {
-  local url="$1"
-  local code="$2"
+  local url="$1"; shift
+  local code="$1"; shift
   [ $(curl -s -o /dev/null -w "%{http_code}" $url) = $code ]
 }
 
