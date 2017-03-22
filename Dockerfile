@@ -24,6 +24,9 @@ COPY config/ /etc/freeswitch/
 RUN mv /etc/freeswitch/directory/default/example.com.xml \
        /etc/freeswitch/directory/default/example.com.xml.noload
 
+# Injects any built modules
+COPY build/modules/* /usr/lib/freeswitch/mod/
+
 # Don't expose any ports - use host networking
 
 # Set up the entrypoint

@@ -19,8 +19,11 @@ before_script:
   - version="$(awk '$2 == "FREESWITCH_VERSION" { print $3; exit }' Dockerfile | cut -d'~' -f1)"
   - docker pull "$IMAGE"
 
-# Build the container, run it, wait for it to start, then stop it.
+# Build the modules container runs it, modules are copied to build/modules.
+# Build the freeswitch container, run it, wait for it to start, then stop it.
 script:
+  - docker build -f modules.dockerfile -t fs-modules .
+  - docker run --rm -v $PWD/build/modules:/tmp/build/modules/ -p 6780:6780 fs-modules
   - docker build --pull --cache-from "$IMAGE" -t "$IMAGE" .
   - ./test.sh "$IMAGE"
 
