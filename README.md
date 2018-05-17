@@ -40,6 +40,5 @@ For the most part we use the default "vanilla" configuration that FreeSWITCH ins
   * Enable `mod_h26x` for H.263/4 CODEC support.
   * Enable `mod_flite`.
   * Enable `mod_shout`.
-  * Adds and enables `libmod_prometheus` from https://github.com/moises-silva/mod_prometheus.
 * `directory/default/example.com.xml`:
   * This file is renamed to prevent FreeSWITCH from setting up an example (and non-functional) SIP gateway.
