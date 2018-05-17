@@ -8,7 +8,7 @@ RUN echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" 
 
 ENV FREESWITCH_VERSION 1.6.20~37~987c9b9-1~jessie+1
 
-# Install Freeswitch (use regular apt-get install to avoid weird dependency problems)
+# Install Freeswitch
 RUN set -ex; \
     packages=' \
         freeswitch \
