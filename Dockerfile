@@ -21,8 +21,11 @@ RUN cp -a /usr/share/freeswitch/conf/vanilla/. /etc/freeswitch/
 COPY config/ /etc/freeswitch/
 
 # Disable the example gateway
-RUN mv /etc/freeswitch/directory/default/example.com.xml \
-       /etc/freeswitch/directory/default/example.com.xml.noload
+RUN set -ex; \
+    cd /etc/freeswitch; \
+    mv directory/default/example.com.xml directory/default/example.com.xml.noload; \
+    mv sip_profiles/external-ipv6.xml sip_profiles/external-ipv6.xml.noload; \
+    mv sip_profiles/internal-ipv6.xml sip_profiles/internal-ipv6.xml.noload
 
 # Don't expose any ports - use host networking
 
