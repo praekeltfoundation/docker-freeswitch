@@ -31,7 +31,12 @@ function module_exists {
 
 set -x
 
-docker run -d --name freeswitch "$image"
+# The Sofia module tries to bind to an IPv6 interface, but Docker's default
+# configuration doesn't enable IPv6 for containers. This causes FreeSWITCH to
+# error. By running with --net=host (which we do when we deploy the image
+# anyway) we use the host networking which should support IPv6. This seems like
+# less work than trying to get Sofia to not bind to an IPv6 interface.
+docker run -d --net=host --name freeswitch "$image"
 # Set a trap to stop the container when we exit
 trap "{ set +x; docker stop freeswitch; docker rm -f freeswitch; }" EXIT
 
