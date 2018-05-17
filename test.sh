@@ -29,15 +29,9 @@ function module_exists {
   [ $(fs_cli_command module_exists "$module") = 'true' ]
 }
 
-function http_check {
-  local url="$1"; shift
-  local code="$1"; shift
-  [ $(curl -s -o /dev/null -w "%{http_code}" $url) = $code ]
-}
-
 set -x
 
-docker run -p 6780:6780 -d --name freeswitch "$image"
+docker run -d --name freeswitch "$image"
 # Set a trap to stop the container when we exit
 trap "{ set +x; docker stop freeswitch; docker rm -f freeswitch; }" EXIT
 
@@ -55,7 +49,6 @@ fs_cli_command console colorize | fgrep '+OK console color disabled'
 module_exists mod_h26x
 module_exists mod_flite
 module_exists mod_shout
-module_exists libmod_prometheus
 
 # No Sofia profiles (no default ones)
 fs_cli_command sofia profile internal gwlist | fgrep -e '-ERR no reply'
