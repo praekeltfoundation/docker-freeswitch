@@ -9,12 +9,18 @@ RUN echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" 
 ENV FREESWITCH_VERSION 1.6.20~37~987c9b9-1~jessie+1
 
 # Install Freeswitch (use regular apt-get install to avoid weird dependency problems)
-RUN apt-get update \
-    && apt-get -qy install \
-        freeswitch-meta-vanilla=$FREESWITCH_VERSION \
-        freeswitch-mod-flite=$FREESWITCH_VERSION \
-        freeswitch-mod-shout=$FREESWITCH_VERSION \
-    && rm -rf /var/lib/apt/lists/*
+RUN set -ex; \
+    packages=' \
+        freeswitch
+        freeswitch-conf-vanilla
+        freeswitch-meta-vanilla
+        freeswitch-mod-flite
+        freeswitch-mod-shout
+    '; \
+    apt-get update; \
+    apt-get -y --no-install-recommends install \
+        "$(for package in $packages; do echo "$package=$FREESWITCH_VERSION"; done)"; \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy basic configuration files
 RUN cp -a /usr/share/freeswitch/conf/vanilla/. /etc/freeswitch/
