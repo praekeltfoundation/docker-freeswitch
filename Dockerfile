@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:jessie-slim
 LABEL maintainer "Praekelt.org <sre@praekelt.org>"
 
 # Add Freeswitch 1.6 repo
