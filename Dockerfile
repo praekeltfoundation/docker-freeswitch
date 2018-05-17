@@ -18,8 +18,10 @@ RUN set -ex; \
         freeswitch-mod-shout \
     '; \
     apt-get update; \
-    apt-get -y --no-install-recommends install \
+    apt-get install -y --no-install-recommends \
         $(for package in $packages; do echo "$package=$FREESWITCH_VERSION"; done); \
+# Set of sound clips used in IVR menus. Not versioned like the other packages.
+    apt-get install -y --no-install-recommends freeswitch-sounds-en-us-callie; \
     rm -rf /var/lib/apt/lists/*
 
 # Copy basic configuration files
