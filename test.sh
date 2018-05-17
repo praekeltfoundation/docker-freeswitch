@@ -57,9 +57,6 @@ module_exists mod_flite
 module_exists mod_shout
 module_exists libmod_prometheus
 
-# Check prometheus module is serving correctly
-http_check http://localhost:6780/metrics 200
-
 # No Sofia profiles (no default ones)
 fs_cli_command sofia profile internal gwlist | fgrep -e '-ERR no reply'
 fs_cli_command sofia profile external gwlist | fgrep -e '-ERR no reply'
