@@ -11,11 +11,11 @@ ENV FREESWITCH_VERSION 1.6.20~37~987c9b9-1~jessie+1
 # Install Freeswitch (use regular apt-get install to avoid weird dependency problems)
 RUN set -ex; \
     packages=' \
-        freeswitch
-        freeswitch-conf-vanilla
-        freeswitch-meta-vanilla
-        freeswitch-mod-flite
-        freeswitch-mod-shout
+        freeswitch \
+        freeswitch-conf-vanilla \
+        freeswitch-meta-vanilla \
+        freeswitch-mod-flite \
+        freeswitch-mod-shout \
     '; \
     apt-get update; \
     apt-get -y --no-install-recommends install \
