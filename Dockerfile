@@ -19,7 +19,7 @@ RUN set -ex; \
     '; \
     apt-get update; \
     apt-get -y --no-install-recommends install \
-        "$(for package in $packages; do echo "$package=$FREESWITCH_VERSION"; done)"; \
+        $(for package in $packages; do echo "$package=$FREESWITCH_VERSION"; done); \
     rm -rf /var/lib/apt/lists/*
 
 # Copy basic configuration files
