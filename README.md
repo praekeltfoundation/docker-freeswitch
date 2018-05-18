@@ -24,6 +24,7 @@ docker exec -it freeswitch fs_cli
 This is NOT a complete FreeSWITCH installation - the Docker image only contains the "meta-vanilla" packages as well as a couple of extra modules. FreeSWITCH is a very large software project with many submodules. We install only the features that *we* need. Still, this may be a useful starting point for anybody looking to run FreeSWITCH under Docker.
 
 We install the following FreeSWITCH packages:
+* `freeswitch-conf-vanilla`
 * `freeswitch-meta-vanilla`
 * `freeswitch-mod-flite` (for text-to-speech)
 * `freeswitch-mod-shout` (for playing audio from files)
