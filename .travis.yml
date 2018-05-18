@@ -1,6 +1,6 @@
 sudo: required
-services:
-  - docker
+group: trusty_latest
+services: docker
 language: python
 
 env:
@@ -9,27 +9,23 @@ env:
     - REGISTRY_USER=praekeltorgdeploy
     - secure: "W21cHV4ow3eGFZJmI5dpTs9zGIjRcrYkMbwE//TS8TJP1zNm6/kcRauyapyxo+hjlf717HH8mM/N8NiJ96w3q440s5QI28I7UpgJH/9Xt2czVcCC/dDa5sOsYqZX6phTc2HulPW8hLCaW4YK2cxe3sSxq2RqnHj42hlul7Nw68SYoKlScWUwX0tIRpUOQWPFpv1hFwm3yYZAEJ2OLma0yd+pvW2QlYe0C9KCAEhSXTn+PErvnkACzP2XkpFyleQ41Y+0E459XQRYsG+KvgMW8UcVPZO4zoeQ3lyAKPNtbQ3GQO0U79B+AQ3bGDleGpwDSzckGa9xulL5vIAS8RtwUPYP0VWhBj8ST7lKNh81F/5twWD8Z8mQp2ne12sGb1J0WCvpfVlJq5IgqriF04AHhC5SBzQDg+fqss8NEPzqG0nKBmPeCaKiuu5CTw+XI/O8bRnmxS2BiPNoepkpBMFLvlrVJuiFlZgUyljM9CNEZ7XvkphcULyjICUPVEyJE5vS3p/49HoctJIU3OOyohj0oDNYJd5pSn1DuXd3GQKOiUwdFTqoILxrtnPkcEiX79InsVk6yAQYrFAHN0Qi8DuQqgKRmJM6SNpzxWJxKvRJqajpPhCyOY/IdRyjyNYNd5GSconh6btRHU0fUwACaYEgzcslushzLlsuxaOPU2ppkC0="
 
-# Update Docker Engine
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -qy -o Dpkg::Options::="--force-confold" docker-engine
 install: []
 
 before_script:
   - version="$(awk '$2 == "FREESWITCH_VERSION" { print $3; exit }' Dockerfile | cut -d'~' -f1)"
   - docker pull "$IMAGE"
 
-# Build the modules container runs it, modules are copied to build/modules.
 # Build the freeswitch container, run it, wait for it to start, then stop it.
 script:
-  - docker build -f modules.dockerfile -t fs-modules .
-  - docker run --rm -v $PWD/build/modules:/tmp/build/modules/ -p 6780:6780 fs-modules
   - docker build --pull --cache-from "$IMAGE" -t "$IMAGE" .
   - ./test.sh "$IMAGE"
 
+after_script:
+  - docker images
+
 before_deploy:
   - pip install docker-ci-deploy==0.2.0
-  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+  - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
 deploy:
   provider: script
   script: dcd --tag-version "$version" --tag-semver --tag-latest "$IMAGE"
