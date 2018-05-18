@@ -6,9 +6,13 @@ RUN echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" 
         > /etc/apt/sources.list.d/freeswitch.list \
     && apt-key adv --keyserver pool.sks-keyservers.net --recv-key 20B06EE621AB150D40F6079FD76EDC7725E010CF
 
-ENV FREESWITCH_VERSION 1.6.20~37~987c9b9-1~jessie+1
+# Set of sound clips used in IVR menus. Not versioned like the other packages.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends freeswitch-sounds-en-us-callie \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Freeswitch
+ENV FREESWITCH_VERSION 1.6.20~37~987c9b9-1~jessie+1
 RUN set -ex; \
     packages=' \
         freeswitch \
@@ -20,8 +24,6 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         $(for package in $packages; do echo "$package=$FREESWITCH_VERSION"; done); \
-# Set of sound clips used in IVR menus. Not versioned like the other packages.
-    apt-get install -y --no-install-recommends freeswitch-sounds-en-us-callie; \
     rm -rf /var/lib/apt/lists/*
 
 # Copy basic configuration files
