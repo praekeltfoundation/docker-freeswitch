@@ -28,6 +28,7 @@ We install the following FreeSWITCH packages:
 * `freeswitch-meta-vanilla`
 * `freeswitch-mod-flite` (for text-to-speech)
 * `freeswitch-mod-shout` (for playing audio from files)
+* `freeswitch-sounds-en-us-callie` (some basic audio clips we use - **note that these add significantly to the image size**)
 
 ### Networking
 It is not recommended that you use Docker's bridge networking mode for FreeSWITCH as some of the protocols (namely, SIP) make use of a very large number of ports and it is not feasible to forward all of these ports to the host. Instead, consider using Docker's host networking mode or a network type that gives the container its own IP address.
